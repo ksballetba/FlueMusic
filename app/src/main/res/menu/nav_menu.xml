@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single"
+        android:id="@+id/user_group">
+
+        <item
+            android:id="@+id/nav_message"
+            android:icon="@drawable/ic_message_black_24dp"
+            android:title="消息"/>
+
+        <item
+            android:id="@+id/nav_friend"
+            android:icon="@drawable/ic_account_circle_black_24dp"
+            android:title="好友"/>
+
+
+    </group>
+
+    <group android:checkableBehavior="single"
+        android:id="@+id/tool_group">
+
+        <item
+            android:id="@+id/nav_setting"
+            android:icon="@drawable/ic_settings_black_24dp"
+            android:title="设置"/>
+
+        <item
+            android:id="@+id/nav_logout"
+            android:icon="@drawable/ic_power_settings_new_black_24dp"
+            android:title="退出"/>
+
+
+
+    </group>
+</menu>
