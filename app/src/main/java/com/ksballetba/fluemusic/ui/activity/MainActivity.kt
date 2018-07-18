@@ -1,15 +1,14 @@
 package com.ksballetba.fluemusic.ui.activity
-
-import android.content.Context
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.preference.PreferenceManager
+import android.support.v4.app.Fragment
+import android.support.v4.app.FragmentManager
 import android.support.v4.view.GravityCompat
-import android.support.v7.app.ActionBarDrawerToggle
-import android.view.Gravity
 import android.view.MenuItem
 import com.bumptech.glide.Glide
 import com.ksballetba.fluemusic.R
+import com.ksballetba.fluemusic.ui.fragment.MusicFragment
 import com.ksballetba.fluemusic.utils.network.NetworkManager
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.layout_main.*
@@ -18,8 +17,12 @@ import org.jetbrains.anko.clearTask
 import org.jetbrains.anko.intentFor
 import org.jetbrains.anko.newTask
 import org.jetbrains.anko.toast
+import android.support.v4.app.FragmentStatePagerAdapter
+
 
 class MainActivity : AppCompatActivity() {
+    val fragmentList = ArrayList<Fragment>()
+    private val musicFragment = MusicFragment()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,6 +39,11 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(main_toolbar)
         var actionBar = supportActionBar
         actionBar?.setDisplayHomeAsUpEnabled(true)
+        fragmentList.add(musicFragment)
+        main_viewpager.adapter = KotlinPagerAdapter(fragmentList,supportFragmentManager)
+        main_viewpager.offscreenPageLimit = 3
+        main_tablayout.setupWithViewPager(main_viewpager)
+        main_tablayout.getTabAt(0)?.text = "发现"
         val preferences = PreferenceManager.getDefaultSharedPreferences(this)
         getUserDetial(preferences.getString("uid",""))
         setItemListener()
@@ -80,4 +88,15 @@ class MainActivity : AppCompatActivity() {
         }
         return super.onOptionsItemSelected(item)
     }
+}
+
+class KotlinPagerAdapter(var mList : List<Fragment>, fm: FragmentManager?) : FragmentStatePagerAdapter(fm) {
+    override fun getItem(position: Int): android.support.v4.app.Fragment {
+        return mList[position]
+    }
+
+    override fun getCount(): Int {
+        return mList.size
+    }
+
 }

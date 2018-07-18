@@ -10,7 +10,8 @@
         android:id="@+id/nav_headbg"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scaleType="centerCrop" />
+        android:scaleType="centerCrop"
+        android:fitsSystemWindows="true"/>
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/nav_headavatar"
