@@ -11,4 +11,5 @@
     <color name="secondary_text">#414141</color>
     <color name="icons">#FFFFFF</color>
     <color name="divider">#dadada</color>
+    <color name="transbg">#19000000</color>
 </resources>

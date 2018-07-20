@@ -18,20 +18,18 @@ import org.jetbrains.anko.intentFor
 import org.jetbrains.anko.newTask
 import org.jetbrains.anko.toast
 import android.support.v4.app.FragmentStatePagerAdapter
+import com.ksballetba.fluemusic.ui.fragment.ExploreFragment
 
 
 class MainActivity : AppCompatActivity() {
     val fragmentList = ArrayList<Fragment>()
-    private val musicFragment = MusicFragment()
-
+    lateinit var musicFragment:MusicFragment
+    lateinit var exploreFragment:ExploreFragment
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        val preferences = PreferenceManager.getDefaultSharedPreferences(this)
-        if(preferences.getInt("isLogin",0)!=1){
-            startActivity(intentFor<LoginActivity>().newTask())
-        }
+
         init()
     }
 
@@ -39,11 +37,15 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(main_toolbar)
         var actionBar = supportActionBar
         actionBar?.setDisplayHomeAsUpEnabled(true)
+        musicFragment = MusicFragment()
+        exploreFragment = ExploreFragment()
         fragmentList.add(musicFragment)
+        fragmentList.add(exploreFragment)
         main_viewpager.adapter = KotlinPagerAdapter(fragmentList,supportFragmentManager)
         main_viewpager.offscreenPageLimit = 3
         main_tablayout.setupWithViewPager(main_viewpager)
-        main_tablayout.getTabAt(0)?.text = "发现"
+        main_tablayout.getTabAt(0)?.text = "我的"
+        main_tablayout.getTabAt(1)?.text = "推荐"
         val preferences = PreferenceManager.getDefaultSharedPreferences(this)
         getUserDetial(preferences.getString("uid",""))
         setItemListener()
@@ -68,10 +70,10 @@ class MainActivity : AppCompatActivity() {
                 R.id.nav_logout -> {
                     val preferences = PreferenceManager.getDefaultSharedPreferences(this)
                     val editor = preferences.edit()
+                    editor.clear()
                     editor.putInt("isLogin",0)
                     editor.commit()
                     startActivity(intentFor<LoginActivity>().clearTask().newTask())
-
                 }
 
             }

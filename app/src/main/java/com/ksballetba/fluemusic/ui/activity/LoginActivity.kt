@@ -15,6 +15,10 @@ class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
+        val preferences = PreferenceManager.getDefaultSharedPreferences(this)
+        if(preferences.getInt("isLogin",0)==1){
+            startActivity(intentFor<MainActivity>().clearTask().newTask())
+        }
         init()
     }
 

@@ -10,32 +10,32 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.bumptech.glide.Glide
 import com.ksballetba.fluemusic.R
-import com.ksballetba.fluemusic.utils.model.PlaylistModel
-import kotlinx.android.synthetic.main.playlist_item.view.*
+import com.ksballetba.fluemusic.utils.model.HighPlaylistModel
 
-class PlaylistAdapter(val mItems:ArrayList<PlaylistModel>?,internal val didSelectedAtPos:(idx:Int)->Unit):RecyclerView.Adapter<PlaylistAdapter.ViewHolder>() {
+class PlaylistAdapter2(val mItems:ArrayList<HighPlaylistModel>?,internal val didSelectedAtPos:(idx:Int)->Unit):RecyclerView.Adapter<PlaylistAdapter2.ViewHolder>() {
     internal var mContext:Context? = null
     class ViewHolder(view: View):RecyclerView.ViewHolder(view){
-        var cardView = view as CardView
-        var playlistImage = view.findViewById<ImageView>(R.id.playlist_image)
-        var playlistName = view.findViewById<TextView>(R.id.playlist_name)
-        var playlistCount = view.findViewById<TextView>(R.id.playlist_count)
+        var playlistListenCount = view.findViewById<TextView>(R.id.playlist_listencount)
+        var playlistCardView = view.findViewById<CardView>(R.id.playlist_cardview)
+        var playlistImage = view.findViewById<ImageView>(R.id.playlist2_image)
+        var playlistName = view.findViewById<TextView>(R.id.playlist2_name)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         if (mContext==null) {
             mContext = parent.context
         }
-        val view = LayoutInflater.from(mContext).inflate(R.layout.playlist_item,parent,false)
+        val view = LayoutInflater.from(mContext).inflate(R.layout.playlist_item2,parent,false)
         return ViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        fun bind(model: PlaylistModel){
+        fun bind(model: HighPlaylistModel){
+            val playlistenCount = if(model.playCount>10000) "${(model.playCount/10000)}万" else model.playCount.toString()
             holder.playlistName.text = model.name
-            holder.playlistCount.text = "${model.trackCount}首"
+            holder.playlistListenCount.text = "$playlistenCount  "
             Glide.with(mContext!!).load(model.coverImgUrl).into(holder.playlistImage)
-            with(holder.cardView){
+            with(holder.playlistCardView){
                 setOnClickListener(object :View.OnClickListener{
                     override fun onClick(v: View?) {
                         didSelectedAtPos(position)
@@ -52,7 +52,7 @@ class PlaylistAdapter(val mItems:ArrayList<PlaylistModel>?,internal val didSelec
         return mItems!!.size
     }
 
-    fun update(newData: List<PlaylistModel>) {
+    fun update(newData: List<HighPlaylistModel>) {
         mItems?.clear()
         mItems?.addAll(newData)
         notifyDataSetChanged()

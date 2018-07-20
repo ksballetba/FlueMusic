@@ -126,7 +126,7 @@
 
                 <Button
                     android:id="@+id/main_music_listbutton"
-                    android:background="@drawable/ic_queue_music_black_24dp"
+                    android:background="@drawable/ic_playlist_play_black_24dp"
                     android:layout_width="30dp"
                     android:layout_height="30dp" />
 
